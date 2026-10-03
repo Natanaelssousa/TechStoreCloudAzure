@@ -1,4 +1,4 @@
-const API_URL = "https://localhost:7128/api/produtos";
+const API_URL = "https://app-techstore-api-natanael-h7dvb7egdfcucfgv.brazilsouth-01.azurewebsites.net/api/produtos";
 const TAMANHO_PAGINA = 10;
 
 const elemento = (id) => document.getElementById(id);
