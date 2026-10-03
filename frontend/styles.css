@@ -1,0 +1,182 @@
+:root {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #172235;
+    background: #f3f6fa;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: auto;
+}
+
+header {
+    background: #142a48;
+    color: white;
+    padding: 28px 0;
+}
+
+header h1 {
+    margin: 0 0 8px;
+}
+
+header p {
+    margin: 0;
+    color: #d6e3f5;
+}
+
+main {
+    padding: 20px 0 40px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #dce3ed;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+input:not([type="checkbox"]),
+textarea {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    margin-top: 6px;
+    border: 1px solid #aebdce;
+    border-radius: 6px;
+    font: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.acoes,
+.paginacao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#busca {
+    flex: 1;
+    min-width: 180px;
+    margin-top: 0;
+}
+
+button {
+    background: #175cd3;
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font: inherit;
+}
+
+button.secundario {
+    background: #e9eef6;
+    color: #172235;
+}
+
+button.perigo {
+    background: #b42318;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #82b4ff;
+    outline-offset: 2px;
+}
+
+.tabela-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+th {
+    background: #f3f6fa;
+}
+
+td button {
+    margin: 3px;
+}
+
+.paginacao {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#mensagem:empty {
+    display: none;
+}
+
+#mensagem {
+    padding: 14px;
+    border-radius: 6px;
+    background: #e8f1ff;
+}
+
+#mensagem.erro {
+    color: #8a1c13;
+    background: #feeceb;
+}
+
+@media (max-width: 650px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}

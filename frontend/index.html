@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TechStore Cloud | Produtos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>TechStore Cloud</h1>
+            <p>Gerencie seu catálogo de produtos digitais.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <p id="mensagem" role="status" aria-live="polite"></p>
+
+        <section class="card">
+            <h2 id="titulo-formulario">Cadastrar produto</h2>
+
+            <form id="form-produto">
+                <div class="grid">
+                    <label>
+                        Código
+                        <input id="codigo" required maxlength="50">
+                    </label>
+
+                    <label>
+                        Nome
+                        <input id="nome" required maxlength="150">
+                    </label>
+
+                    <label>
+                        Preço (R$)
+                        <input id="preco" type="number"
+                               min="0.01" max="9999999999999999.99"
+                               step="0.01" required>
+                    </label>
+
+                    <label>
+                        Categoria
+                        <input id="categoria" required maxlength="100">
+                    </label>
+                </div>
+
+                <label>
+                    Descrição
+                    <textarea id="descricao" maxlength="1000"
+                              rows="3"></textarea>
+                </label>
+
+                <label class="checkbox">
+                    <input id="ativo" type="checkbox" checked>
+                    Produto ativo
+                </label>
+
+                <div class="acoes">
+                    <button id="salvar" type="submit">Salvar produto</button>
+                    <button id="cancelar" type="button" class="secundario">
+                        Limpar / cancelar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Catálogo</h2>
+
+            <form id="form-busca" class="acoes">
+                <input id="busca" type="search"
+                       placeholder="Buscar por nome"
+                       aria-label="Buscar produto por nome">
+                <button type="submit">Buscar</button>
+            </form>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produtos"></tbody>
+                </table>
+            </div>
+
+            <div class="paginacao">
+                <button id="anterior" type="button" class="secundario">
+                    Anterior
+                </button>
+                <span id="pagina"></span>
+                <button id="proxima" type="button" class="secundario">
+                    Próxima
+                </button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
