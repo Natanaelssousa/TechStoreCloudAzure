@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy dotnet core app to Azure Function App - func-techstore-monitor-natanael
+name: Build and deploy Azure Function - func-techstore-monitor-natanael
 
 on:
   push:
@@ -10,32 +7,39 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '8.0.x' # set this to the dotnet version to use
+  DOTNET_VERSION: '8.0.x'
+  FUNCTION_PROJECT: 'TechStore.Monitoring.Functions/TechStore.Monitoring.Functions.csproj'
+  PUBLISH_PATH: './function-publish'
 
 jobs:
   build-and-deploy:
     runs-on: windows-latest
+
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: 'Checkout GitHub Action'
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v1
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: 'Resolve Project Dependencies Using Dotnet'
+      - name: Restore dependencies
         shell: pwsh
-        run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --output ./output
-          popd
-      
+        run: dotnet restore "${{ env.FUNCTION_PROJECT }}"
+
+      - name: Build Function
+        shell: pwsh
+        run: dotnet build "${{ env.FUNCTION_PROJECT }}" --configuration Release --no-restore
+
+      - name: Publish Function
+        shell: pwsh
+        run: dotnet publish "${{ env.FUNCTION_PROJECT }}" --configuration Release --no-build --output "${{ env.PUBLISH_PATH }}"
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -43,11 +47,8 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8E9217A3F8EC4FEF84254BEEEDDD9048 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6CFA690454354AF08A29D602AB230F73 }}
 
-      - name: 'Run Azure Functions Action'
+      - name: Deploy to Azure Functions
         uses: Azure/functions-action@v1
-        id: fa
         with:
           app-name: 'func-techstore-monitor-natanael'
-          slot-name: 'Production'
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          
+          package: ${{ env.PUBLISH_PATH }}
